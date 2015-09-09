@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""server.py"""
+""" server.py """
 
-from wsgiref.simple_server import make_server
-from application import my_app
+"""the dolphin web framework"""
+from dolphin.api.api import *
+from dolphin.apps.urls import *
 
 urls = (
     ("/", "index"),

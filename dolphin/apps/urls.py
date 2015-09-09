@@ -3,11 +3,11 @@
 
 """application.py"""
 
+""" Example """
+
 import re
 
 class my_app:
-    """the dolphin web framework"""
-
     headers = []
 
     def __init__(self, urls=(), fvars={}):
@@ -51,3 +51,6 @@ class my_app:
     @classmethod
     def header(cls, name, value):
         cls.headers.append((name, value))
+
+
+""" Example End """
