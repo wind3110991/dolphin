@@ -9,7 +9,6 @@ import MySQLdb
 class Field(object):
     pass
 
-
 class Expr(object):
     def __init__(self, model, kwargs):
         self.model = model
