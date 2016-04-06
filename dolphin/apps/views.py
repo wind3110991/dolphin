@@ -7,12 +7,12 @@
 class index:
     def GET(self):
         #my_app.header('Content-type', 'text/plain')
-        return "Welcome To Dolphin's World!\n"
+        return "<h1>Welcome To Dolphin's World!</h1>\n"
 
 class hello:
     def GET(self, name):
         #my_app.header('Content-type', 'text/plain')
-        return "Hello %s!\n" % name
+        return "<h1>Hello %s!\n</h1>" % name
 
 class test:
     def GET(self, name):
