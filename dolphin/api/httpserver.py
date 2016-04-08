@@ -3,12 +3,15 @@
 
 """ httpserver.py """
 
-"""服务器启动文件"""
+""" 定义http服务器的内核 """
+
+import urllib
 from dolphin.apps.urls import *
 from wsgiref.simple_server import make_server
 
 class WSGIApplication:
     headers = []
+
     def __init__(self, urls=(), fvars={}):
         self._urls = urls
         self._fvars = fvars
@@ -25,6 +28,19 @@ class WSGIApplication:
     #     else:
     #         return iter(result)
 
+    # 返回WSGI处理函数:
+    def get_wsgi_application(self):
+        def wsgi(environ, start_response):
+            del self.headers[:] # 在每次作出响应前，清空上一次的headers
+            result = self._delegate(environ)
+            start_response(self._status, self.headers)
+
+            # 将返回值result（字符串 或者 字符串列表）转换为迭代对象
+            if isinstance(result, basestring):
+                return iter([result])
+            else:
+                return iter(result)
+        return wsgi
     def _delegate(self, environ):
         path = environ['PATH_INFO']
         method = environ['REQUEST_METHOD']
@@ -45,14 +61,12 @@ class WSGIApplication:
     def _notfound(self):
         self.status = '404 Not Found'
         self.header('Content-type', 'text/plain')
-        return "Not Found\n"
+        return "Sorry, your request url is not found\n"
 
+    # 该类方法用来通过调用为类定义一个header
     @classmethod
     def header(cls, name, value):
         cls.headers.append((name, value))
-
-    # def __init__(self, document_root=None, **kw):
-    #     pass
 
     # 添加一个URL定义:
     def add_url(self, func):
@@ -62,7 +76,7 @@ class WSGIApplication:
     def add_interceptor(self, func):
         pass
 
-    # 设置TemplateEngine:
+    # 设置TemplateEngine－－模版引擎:
     @property
     def template_engine(self):
         pass
@@ -70,20 +84,6 @@ class WSGIApplication:
     @template_engine.setter
     def template_engine(self, engine):
         pass
-
-    # 返回WSGI处理函数:
-    def get_wsgi_application(self):
-        def wsgi(environ, start_response):
-            del self.headers[:] # 在每次作出响应前，清空上一次的headers
-            result = self._delegate(environ)
-            start_response(self._status, self.headers)
-
-            # 将返回值result（字符串 或者 字符串列表）转换为迭代对象
-            if isinstance(result, basestring):
-                return iter([result])
-            else:
-                return iter(result)
-        return wsgi
 
     # 开发模式下直接启动服务器:
     def run(self, port, host):

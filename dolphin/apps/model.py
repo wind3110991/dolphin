@@ -2,14 +2,14 @@
 
 """ model.py """
 
-""" Data ORM """
+""" ORM关系映射 """
 
 import sys
 import os
 from dolphin.db.db import Model, Field
 
 
-""" Example """
+""" Example 
 class ModelName(Model):
 	db_table = 'table name'
 	id = Field()
@@ -19,3 +19,4 @@ class ModelName(Model):
 	vlan = Field()
 	min = Field()
 	max = Field()
+"""

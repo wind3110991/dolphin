@@ -3,9 +3,9 @@
 
 """ server.py """
 
-"""服务器启动文件"""
+""" web服务启动文件 """
 
-import sys
+import sys, os
 from dolphin.apps.urls import *
 from dolphin.api.api import *
 from dolphin.api.httpserver import *
@@ -14,7 +14,6 @@ from dolphin.api.httpserver import *
 #    start_response('200 OK', [('Content-type', 'text/html')])
 #    return '<h1>Hello,Welcome to Dolphin!</h1>'
 
-#Testing by Wind
 WSGIApplication.header('Content-type', 'text/plain')
 wsgiapp = WSGIApplication(urls, globals())
 
@@ -24,5 +23,4 @@ if __name__ == '__main__':
 
     # Respond to requests until process is killed
     # Listening to the HTTP request
-    ##httpd.serve_forever()
     wsgiapp.run(tmp_port, '127.0.0.1')
