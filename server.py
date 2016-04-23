@@ -10,6 +10,7 @@ from dolphin.apps.urls import *
 from dolphin.api.api import *
 from dolphin.api.httpserver import *
 
+localhost = '127.0.0.1'
 #def wsgiapp(environ,start_response):
 #    start_response('200 OK', [('Content-type', 'text/html')])
 #    return '<h1>Hello,Welcome to Dolphin!</h1>'
@@ -23,4 +24,4 @@ if __name__ == '__main__':
 
     # Respond to requests until process is killed
     # Listening to the HTTP request
-    wsgiapp.run(tmp_port, '127.0.0.1')
+    wsgiapp.run(tmp_port, localhost)

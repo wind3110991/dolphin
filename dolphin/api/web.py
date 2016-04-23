@@ -10,6 +10,9 @@ __all__ = [
     "config",
     "debug",
     "HTTPError",
+    "header", "debug",
+    "input", "data",
+    "setcookie", "cookies",
 
     "OK", #200
     "Redirect", #301
@@ -24,7 +27,8 @@ import sys, cgi, Cookie, pprint, urlparse, urllib, urllib2
 import threading
 
 # 全局ThreadLocal对象：
-"""Threading有一个非常特别的类local。一旦在主线程实例化了一个local，它会一直活在主线程中，
+""" 
+Threading有一个非常特别的类local。一旦在主线程实例化了一个local，它会一直活在主线程中，
 并且又主线程启动的子线程调用这个local实例时，它的值将会保存在相应的子线程的字典中。
 目的在于：在当前线程保存一个全局值，并且各自线程互不干扰
 """
@@ -119,6 +123,8 @@ class InternalError(HTTPError):
         HTTPError.__init__(self, status, headers, self.msg)
 
 internalerror = InternalError
+
+r""" 有待商讨
 # request对象:
 class Request(object):
     # 根据key返回value:
@@ -176,6 +182,8 @@ def view(path):
 # 定义拦截器:
 def interceptor(pattern):
     pass
+
+"""
 
 # HTTP错误类:
 class HttpError(Exception):
@@ -273,6 +281,19 @@ def cookies(*requireds, **defaults):
     except KeyError:
         badrequest()
         raise StopIteration
+
+def debug(*args):
+    try:
+        out = ctx.environ['wsgi.errors']
+    except:
+        out = sys.stderr
+    for arg in args:
+        print >> out, pprint.pformat(arg)
+    
+    out.write(x)
+    return ''
+
+#debug()
 
 # 定义模板引擎:
 class TemplateEngine(object):

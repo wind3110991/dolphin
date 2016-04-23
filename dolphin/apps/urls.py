@@ -12,5 +12,6 @@ from dolphin.apps.views import *
 urls = (
     ("/", "index"),
     ("/hello/(.*)", "hello"),
-    ("/test/(.*)", "test")
+    ("/test/(.*)", "test"),
+    ("/jigong/(.*)", "jigong")
 )

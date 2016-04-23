@@ -4,13 +4,9 @@
 """ tools.py """
 
 """ 提供框架所必要的工具 """
-
-import sys
-import time
-import os
-import urllib
 from wsgiref.simple_server import make_server
-
+import sys, time, os
+import urllib
 try:
     import datetime
 except ImportError:
@@ -75,5 +71,6 @@ def safeunicode(obj, encoding='utf-8'):
     else:
         return str(obj).decode(encoding)
 # for backward-compatibility
+
 
 utf8 = safestr
